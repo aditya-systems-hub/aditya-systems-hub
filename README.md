@@ -49,6 +49,50 @@ motto: "Ship clean code. Automate everything. Contribute back."
 
 ---
 
+### About Me (Go)
+
+```go
+package main
+
+import "fmt"
+
+type Developer struct {
+    Name       string
+    Role       string
+    Focus      []string
+    Languages  []string
+    Interests  []string
+}
+
+func (d Developer) String() string {
+    return fmt.Sprintf(
+        "👨‍💻 %s\n📌 %s\n🎯 Building: %v\n💻 Languages: %v\n🚀 Passionate about: %v",
+        d.Name, d.Role, d.Focus, d.Languages, d.Interests,
+    )
+}
+
+func main() {
+    developer := Developer{
+        Name:  "Aditya",
+        Role:  "Open Source Developer | DevOps Enthusiast | Full Stack Engineer",
+        Focus: []string{"Infrastructure", "Web Applications", "Automation"},
+        Languages: []string{"Python", "JavaScript", "Go", "Bash"},
+        Interests: []string{"CI/CD", "Kubernetes", "Cloud Native", "DevOps"},
+    }
+    
+    fmt.Println(developer)
+}
+
+// Output:
+// 👨‍💻 Aditya
+// 📌 Open Source Developer | DevOps Enthusiast | Full Stack Engineer
+// 🎯 Building: [Infrastructure Web Applications Automation]
+// 💻 Languages: [Python JavaScript Go Bash]
+// 🚀 Passionate about: [CI/CD Kubernetes Cloud Native DevOps]
+```
+
+---
+
 ### GitHub Stats
 
 <p align="center">
