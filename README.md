@@ -114,6 +114,116 @@ func main() {
 
 ---
 
+### 🐍 Snake Game - Eating Contributions
+
+<details>
+<summary>Click to play the snake game that eats your contributions!</summary>
+
+```html
+<style>
+  #snakeCanvas {
+    border: 2px solid #30B87F;
+    background-color: #0d1117;
+    display: block;
+    margin: 20px auto;
+  }
+</style>
+
+<canvas id="snakeCanvas" width="400" height="400"></canvas>
+
+<script>
+  const canvas = document.getElementById('snakeCanvas');
+  const ctx = canvas.getContext('2d');
+  const gridSize = 20;
+  const tileCount = canvas.width / gridSize;
+  
+  let snake = [{x: 10, y: 10}];
+  let food = {x: 15, y: 15};
+  let dx = 1;
+  let dy = 0;
+  let score = 0;
+  
+  // Contribution colors for the grid
+  const contributionColors = ['#0d1117', '#16a34a', '#22c55e', '#4ade80', '#22d3ee'];
+  
+  function drawGrid() {
+    for (let i = 0; i < tileCount; i++) {
+      for (let j = 0; j < tileCount; j++) {
+        const colorIndex = Math.floor(Math.random() * contributionColors.length);
+        ctx.fillStyle = contributionColors[colorIndex];
+        ctx.fillRect(i * gridSize, j * gridSize, gridSize - 1, gridSize - 1);
+      }
+    }
+  }
+  
+  function drawSnake() {
+    snake.forEach((segment, index) => {
+      ctx.fillStyle = index === 0 ? '#22d3ee' : '#16a34a';
+      ctx.fillRect(segment.x * gridSize + 1, segment.y * gridSize + 1, gridSize - 2, gridSize - 2);
+    });
+  }
+  
+  function drawFood() {
+    ctx.fillStyle = '#f43f5e';
+    ctx.fillRect(food.x * gridSize + 1, food.y * gridSize + 1, gridSize - 2, gridSize - 2);
+  }
+  
+  function update() {
+    const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+    
+    if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+      return false;
+    }
+    
+    for (let segment of snake) {
+      if (head.x === segment.x && head.y === segment.y) {
+        return false;
+      }
+    }
+    
+    snake.unshift(head);
+    if (head.x === food.x && head.y === food.y) {
+      score++;
+      food = {x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount)};
+    } else {
+      snake.pop();
+    }
+    return true;
+  }
+  
+  function gameLoop() {
+    drawGrid();
+    drawSnake();
+    drawFood();
+    
+    if (update()) {
+      setTimeout(gameLoop, 100);
+    } else {
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '20px Arial';
+      ctx.fillText(`Game Over! Score: ${score}`, 10, 30);
+    }
+  }
+  
+  document.addEventListener('keydown', (e) => {
+    switch(e.key) {
+      case 'ArrowUp': if (dy === 0) { dx = 0; dy = -1; } break;
+      case 'ArrowDown': if (dy === 0) { dx = 0; dy = 1; } break;
+      case 'ArrowLeft': if (dx === 0) { dx = -1; dy = 0; } break;
+      case 'ArrowRight': if (dx === 0) { dx = 1; dy = 0; } break;
+    }
+  });
+  
+  gameLoop();
+</script>
+```
+
+**How to play:** Use arrow keys to control the snake. Each contribution square you eat increases your score! 🐍💚
+
+</details>
+
+---
+
 <p align="center">
   <i>"Talk is cheap. Show me the code." - Linus Torvalds</i>
 </p>
